@@ -22,7 +22,7 @@ export default class App extends Component {
 
   rules = {
     email: [
-      { message: 'Invalid e-mail.', rule: isEmail },
+      { errorMessage: 'Invalid e-mail.', rule: isEmail },
     ],
   };
 
