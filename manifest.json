@@ -1,0 +1,8 @@
+{
+  "short_name": "react-render-props-form-validation",
+  "name": "react-render-props-form-validation",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
