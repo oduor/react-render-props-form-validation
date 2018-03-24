@@ -1,26 +1,72 @@
-/**
- * @class ExampleComponent
- */
-
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import styles from './styles.css'
+const noop = () => undefined;
 
-export default class ExampleComponent extends Component {
+export default class Form extends Component {
   static propTypes = {
-    text: PropTypes.string
+    children: PropTypes.func,
+    rules: PropTypes.object,
+  };
+
+  static defaultProps = {
+    children: noop,
+    rules: {},
+  };
+
+  FIELD_VALIDATION_INITIAL_VALUE = { valid: true, errors: [] };
+
+  state = {};
+
+  constructor(props) {
+    super(props);
+    this.setupComponent();
   }
 
-  render() {
-    const {
-      text
-    } = this.props
+  setupComponent = () => {
+    const { rules } = this.props;
+
+    Object
+      .keys(rules)
+      .map(key => {
+        this.state = {
+          ...this.state,
+          [key]: this.FIELD_VALIDATION_INITIAL_VALUE,
+        };
+      });
+  }
+
+  validate = (name, value) => {
+    const rules = this.props.rules[name];
+
+    if (typeof rules === 'undefined') return;
+
+    let valid = true;
+    let errors = []
+
+    rules.forEach(({ errorMessage, rule }) => {
+      if (rule(value)) return;
+      valid = false;
+      errors = [...errors, errorMessage];
+    });
+
+    this.setState({ [name]: { valid, errors }});
+  }
+  
+  handleChange = event => {
+    const { target: { name, value } } = event;
+
+    this.validate(name, value);
+    if (typeof this.props.onChange === 'function') this.props.onChange(event);
+  }
+
+  render = () => {
+    const { rules, ...props } = this.props;
 
     return (
-      <div className={styles.test}>
-        Example Component: {text}
-      </div>
-    )
+      <form {...props} onChange={this.handleChange}>
+        {this.props.children(this.state)}
+      </form>
+    );
   }
 }

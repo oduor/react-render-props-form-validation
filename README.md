@@ -14,13 +14,34 @@ npm install --save react-render-props-form-validation
 
 ```jsx
 import React, { Component } from 'react'
+import { isEmail } from 'validator';
+import Form from 'react-render-props-form-validation'
 
-import MyComponent from 'react-render-props-form-validation'
+export default class App extends Component {
+  state = { email: 'my@example.com' };
 
-class Example extends Component {
+  rules = {
+    email: [
+      { message: 'Invalid e-mail.', rule: isEmail },
+    ],
+  };
+
+  handleChange = ({ target: { name, value } }) => this.setState({ [name]: value });
+  
   render () {
     return (
-      <MyComponent />
+      <Form rules={this.rules}>
+        {validation => (
+          <React.Fragment>
+            <input type="email" name="email" value={this.state.email} onChange={this.handleChange} />
+            {!validation.email.valid && (
+              <ul>
+                {validation.email.errors.map(err => <li key={err}>{err}</li>)}
+              </ul>
+            )}
+          </React.Fragment>
+        )}
+      </Form>
     )
   }
 }
