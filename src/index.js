@@ -6,11 +6,13 @@ const noop = () => undefined;
 export default class Form extends Component {
   static propTypes = {
     children: PropTypes.func,
+    onSubmit: PropTypes.func,
     rules: PropTypes.object,
   };
 
   static defaultProps = {
     children: noop,
+    onSubmit: noop,
     rules: {},
   };
 
