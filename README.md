@@ -28,9 +28,18 @@ export default class App extends Component {
 
   handleChange = ({ target: { name, value } }) => this.setState({ [name]: value });
   
+  handleSubmit = (event, isValid, validation) => {
+    if (!isValid) {
+      event.preventDefault();
+      return;
+    }
+
+    // Form submit logic here.
+  }
+
   render () {
     return (
-      <Form rules={this.rules}>
+      <Form rules={this.rules} onSubmit={this.handleSubmit}>
         {validation => (
           <React.Fragment>
             <input type="email" name="email" value={this.state.email} onChange={this.handleChange} />

@@ -52,7 +52,18 @@ export default class Form extends Component {
 
     this.setState({ [name]: { valid, errors }});
   }
-  
+
+  isValid = () => {
+    const keys = Object.keys(this.state);
+
+    let i = keys.length;
+    while (i--) {
+      if (!this.state[keys[i]].valid) return false;
+    }
+
+    return true;
+  }
+
   handleChange = event => {
     const { target: { name, value } } = event;
 
@@ -60,11 +71,21 @@ export default class Form extends Component {
     if (typeof this.props.onChange === 'function') this.props.onChange(event);
   }
 
+  handleSubmit = event => {
+    if (typeof this.props.onSubmit === 'function') {
+      this.props.onSubmit(
+        event,
+        this.isValid(),
+        this.state,
+      );
+    }
+  }
+
   render = () => {
     const { rules, ...props } = this.props;
 
     return (
-      <form {...props} onChange={this.handleChange}>
+      <form {...props} onChange={this.handleChange} onSubmit={this.handleSubmit}>
         {this.props.children(this.state)}
       </form>
     );
