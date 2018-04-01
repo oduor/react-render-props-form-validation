@@ -21,3 +21,18 @@ input {
   font-size: 16px;
   padding: 5px;
 }
+
+button {
+  margin: 20px 0;
+  background-color: slateblue;
+  -webkit-appearance: none;
+  border: none;
+  width: 100%;
+  font-size: 16px;
+  padding: 10px;
+  color: white;
+}
+
+button:disabled {
+  opacity: 0.4;
+}
