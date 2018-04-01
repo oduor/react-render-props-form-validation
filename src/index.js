@@ -83,12 +83,17 @@ export default class Form extends Component {
     }
   }
 
+  getValidation = () => ({
+    _isValid: this.isValid(),
+    ...this.state,
+  })
+
   render = () => {
     const { rules, ...props } = this.props;
 
     return (
       <form {...props} onChange={this.handleChange} onSubmit={this.handleSubmit}>
-        {this.props.children(this.state)}
+        {this.props.children(this.getValidation())}
       </form>
     );
   }

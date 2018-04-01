@@ -31,7 +31,8 @@ describe('<Form />', () => {
     };
 
     render(<Form rules={rules}>{child}</Form>);
-    expect(child).toBeCalledWith({
+    expect(child).toHaveBeenCalledWith({
+      _isValid: true,
       name: { valid: true, errors: [] },
     });
   });

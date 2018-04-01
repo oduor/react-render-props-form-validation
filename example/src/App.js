@@ -12,7 +12,7 @@ export default class App extends Component {
   };
 
   handleChange = ({ target: { name, value } }) => this.setState({ [name]: value });
-  
+
   render () {
     return (
       <Form rules={this.rules}>
