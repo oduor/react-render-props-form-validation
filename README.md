@@ -27,14 +27,14 @@ export default class App extends Component {
   };
 
   handleChange = ({ target: { name, value } }) => this.setState({ [name]: value });
-  
+
   handleSubmit = (event, isValid, validation) => {
     if (!isValid) {
       event.preventDefault();
       return;
     }
 
-    // Form submit logic here.
+    // Submit logic here.
   }
 
   render () {
@@ -48,6 +48,7 @@ export default class App extends Component {
                 {validation.email.errors.map(err => <li key={err}>{err}</li>)}
               </ul>
             )}
+            <button type="submit" disabled={!validation._isValid}>{'Submit!'}</button>
           </React.Fragment>
         )}
       </Form>
